@@ -15,5 +15,50 @@
       action="library_book_action"
       parent=""
       sequence="5" />
-        
+
+  <!-- custom form view library.book -->
+  <record id="library_book_view_form" model="ir.ui.view">
+    <field name="name">Library Book Form</field>
+    <field name="model">library.book</field>
+    <field name="arch" type="xml">
+      <form>
+        <group>
+          <field name="name"/>
+          <field name="author_ids" widget="many2many_tags"/>
+        </group>
+        <group>
+          <field name="date_release"/>
+        </group>
+      </form>
+    </field>
+  </record>
+  <!-- custom form view library.book -->
+
+  <!-- custom tree view library.book --> 
+  <record id="library_book_view_tree" model="ir.ui.view">
+    <field name="name">Library Book List</field>
+    <field name="model">library.book</field>
+    <field name="arch" type="xml">
+      <tree>
+        <field name="name"/>
+        <field name="date_release"/>
+      </tree>
+    </field>
+  </record>
+  <!-- custom tree view library.book -->
+  
+  <!-- custom search filters library.book -->
+  <record id="library_book_view_search" model="ir.ui.view">
+    <field name="name">Library Book Search</field>
+    <field name="model">library.book</field>
+    <field name="arch" type="xml">
+      <search>
+        <field name="name"/>
+        <field name="author_ids"/>
+        <filter string="No Authors" domain="[('author_ids','=',False)]"/>
+      </search>
+    </field>
+  </record>
+  <!-- custom search filters library.book -->
+
 </openerp>
