@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<openerp>
+<odoo>
   <data>
     <!-- Data records go here -->
   </data>
@@ -62,4 +62,4 @@
   </record>
   <!-- custom search filters library.book -->
 
-</openerp>
+</odoo>

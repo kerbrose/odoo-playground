@@ -51,6 +51,6 @@ class LibraryBook(models.Model):
         result = []
         for record in self:
             result.append(
-                (record.id, u"%s (%s)" % (record.name, record.date_released)
+                (record.id, u"%s (%s)" % (record.name, record.date_release)
                  ))
         return result
