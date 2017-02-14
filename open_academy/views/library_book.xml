@@ -54,6 +54,7 @@
     <field name="arch" type="xml">
       <search>
         <field name="name"/>
+        <field name="short_name"/>
         <field name="author_ids"/>
         <filter string="No Authors" domain="[('author_ids','=',False)]"/>
       </search>
