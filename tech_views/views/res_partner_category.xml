@@ -13,18 +13,18 @@
       parent="account.account_account_menu"
       sequence="110" />
       
+      
   <!-- custom form view res.partner.category -->
   <record id="account_account_type_view_form" model="ir.ui.view">
     <field name="name">Partner's Category Form</field>
     <field name="model">res.partner.category</field>
+    <field name="inherit_id" ref="base.view_partner_category_form" />
     <field name="arch" type="xml">
-      <form>
-        <group>
-          <field name="name" />
-          <field name="parent_id" />
+      <data>
+        <xpath expr="//field[@name='name']" position="after">
           <field name="color" />
-        </group>
-      </form>
+        </xpath>
+      </data>
     </field>
   </record>
   <!-- custom form view res.partner.category -->
@@ -33,11 +33,13 @@
   <record id="account_account_type_view_tree" model="ir.ui.view">
     <field name="name">Partner's Category List</field>
     <field name="model">res.partner.category</field>
+    <field name="inherit_id" ref="base.view_partner_category_list" />
     <field name="arch" type="xml">
-      <tree>
-        <field name="name"/>
-        <field name="parent_id"/>
-      </tree>
+      <data>
+        <xpath expr="//field[@name='display_name']" position="after">
+          <field name="parent_id" />
+        </xpath>
+      </data>
     </field>
   </record>
   <!-- custom tree view res.partner.category -->
