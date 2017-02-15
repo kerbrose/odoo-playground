@@ -17,6 +17,8 @@
     'category': 'Technical Settings',
     'version': '0.1',
     'depends': ['account_accountant'],
-    'data': [ 'views/account_account_type.xml' ],
+    'data': [ 'views/account_account_type.xml',
+              'views/res_partner_category.xml',
+              ],
     'demo': [ ],
 }
