@@ -17,7 +17,7 @@
     'website': "https://github.com/kerbrose",
     'category': 'Uncategorized',
     'version': '0.1',
-    'depends': ['base_setup'],
+    'depends': ['base_setup', 'decimal_precision'],
     'data': [ 'views/library_book.xml' ],
     'demo': [ ],
 }

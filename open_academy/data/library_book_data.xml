@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data noupdate="1">
+
+    <!-- Decimal Precision -->
+    <record forcecreate="True" id="decimal_library_book" model="decimal.precision">
+      <field name="name">Book Price</field>
+      <field name="digits">2</field>
+    </record>
+    <!-- Decimal Precision -->
+    
+  </data>
+</odoo>
