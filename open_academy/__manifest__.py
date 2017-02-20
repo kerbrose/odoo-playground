@@ -14,7 +14,7 @@
     'description': """This module can be use as new module template for Odoo 10.0""",
     'author': "ϰhalid Said (Kerbrose)",
     'license': "AGPL-3",
-    'website': "https://github.com/kerbrose",
+    'website': "https://github.com/kerbrose/odoo-playground",
     'category': 'Uncategorized',
     'version': '0.1',
     'depends': ['base_setup', 'decimal_precision'],

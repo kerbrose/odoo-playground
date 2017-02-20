@@ -9,12 +9,25 @@
 
 from odoo import api, models, fields
 from odoo.addons import decimal_precision as dp
+from odoo.fields import Date as fDate
+from datetime import timedelta as td
 
 class LibraryBook(models.Model):
     _name = 'library.book' # this is the unique id for the model
     _description = 'Library Book' # this is a human readable name
     _order = 'date_release desc, name' 
     _rec_name = 'short_name'  # Alternative field to use as name, used by osv’s name_get() (default: 'name')
+    _sql_constraints = [('name_uniq',
+                         'UNIQUE (name)',
+                         'Book title must be unique.')
+]
+    age_days = fields.Float(string = 'Days Since Release',
+                            compute = '_compute_age',
+                            inverse = '_inverse_age',
+                            search = '_search_age',
+                            store = False,
+                            compute_sudo= False,
+                            )
     
     author_ids = fields.Many2many('res.partner', string='Authors')
     
@@ -26,12 +39,12 @@ class LibraryBook(models.Model):
     
     date_release = fields.Date('Release Date')
     
+    date_updated = fields.Datetime('Last Updated')
+    
     description = fields.Html(string='Description', # optional:
                               sanitize=True,
                               strip_style=False,
                               translate=False,)
-    
-    date_updated = fields.Datetime('Last Updated')
     
     name = fields.Char('Title', required=True)
     
@@ -58,10 +71,17 @@ class LibraryBook(models.Model):
                                   domain = [],
                                   )
 
+    publisher_city = fields.Char('Publisher City',
+                                 related = 'publisher_id.city')
+    
     reader_rating = fields.Float( 'Reader Average Rating',
                                   (14, 4), # Optional precision (total, decimals),
                                   )
     
+    ref_doc_id = fields.Reference(selection = '_referencable_models',
+                                  string='Reference Document'
+                                  )
+
     retail_price = fields.Monetary('Retail Price',
                                    currency_field = 'currency_id', # Optional
                                    )
@@ -85,3 +105,34 @@ class LibraryBook(models.Model):
                 (record.id, u"%s (%s)" % (record.name, record.date_release)
                  ))
         return result
+
+    @api.constrains('date_release')
+    def _check_release_date(self):
+        for r in self:
+            if r.date_release > fields.Date.today():
+                raise models.ValidationError('Release date must be in the past')
+
+    @api.depends
+    def _compute_age(self):
+        today = fDate.from_string(fDate.today())
+        for book in self.filtered('date_release'):
+            delta = (fDate.from_string(book.date_release - today))
+            book.age_days = delta.days
+
+    def _inverse_age(self):
+        today = fDate.from_string(fDate.today())
+        for book in self.filtered('date_release'):
+            d = td(days=book.age_days) - today
+            book.date_release = fDate.to_string(d)
+
+    def _search_age(self, operator, value):
+        today = fDate.from_string(fDate.today())
+        value_days = td(days=value)
+        value_date = fDate.to_string(today - value_days)
+        return [('date_release', operator, value_date)]
+    
+    @api.model
+    def _referencable_models(self):
+        models = self.env['res.request.link'].search([])
+        return [(x.object, x.name) for x in models]
+
