@@ -17,7 +17,10 @@
     'website': "https://github.com/kerbrose/odoo-playground",
     'category': 'Uncategorized',
     'version': '0.1',
-    'depends': ['base_setup', 'decimal_precision'],
-    'data': [ 'views/library_book.xml' ],
+    'depends': ['base_setup',
+                'decimal_precision',],
+    'data': ['views/library_book.xml',
+             'security/ir.model.access.csv'
+             ],
     'demo': [ ],
 }
