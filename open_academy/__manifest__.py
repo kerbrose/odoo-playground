@@ -20,6 +20,7 @@
     'depends': ['base_setup',
                 'decimal_precision',],
     'data': ['views/library_book.xml',
+             'views/library_loan_wizard_views.xml',
              'security/ir.model.access.csv'
              ],
     'demo': [ ],
